@@ -15,6 +15,5 @@ class kiss(commands.Cog):
         await ctx.send(str(ctx.author) + ' kisses ' + str(who) + '!\n')
         await ctx.send(file=discord.File('images/kiss.gif'))
 
-
 async def setup(bot):
     await bot.add_cog(kiss(bot))

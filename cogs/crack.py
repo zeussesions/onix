@@ -8,7 +8,6 @@ guess = 0
 
 done = False
 
-
 class crack(commands.Cog):
 
     def __init__(self, bot):

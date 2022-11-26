@@ -4,8 +4,6 @@ from discord import app_commands
 from pokedex import pokedex
 import random
 
-
-
 class pokemon(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -14,7 +12,6 @@ class pokemon(commands.Cog):
     @app_commands.guilds()
     async def pokemon(self, ctx: commands.Context, id_or_name):
         from urllib.request import Request, urlopen
-        from pokedex import pokedex
         import json
         import matplotlib
 
@@ -24,6 +21,10 @@ class pokemon(commands.Cog):
             poke = p.get_pokemon_by_name(id_or_name)
         elif type(id_or_name) == int:
             poke = p.get_pokemon_by_number(id_or_name)
+        elif type(id_or_name) == str and id_or_name == "random":
+            poke = p.get_pokemon_by_number(random.randint(1, 905))
+            id_or_name = random.randint(1, 905)
+            print(id_or_name)
 
         def statsInfo(value):
             url = f"https://pokeapi.co/api/v2/pokemon/{value}"

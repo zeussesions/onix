@@ -33,6 +33,8 @@ bot.remove_command('help')
 bot.remove_command('test')
 bot.remove_command('ping')
 
+
+#everytrhing after this is cog loading, and the web server, for the love of god don't touch it
 async def load():
     for filename in os.listdir('cogs'):
         if filename.endswith('.py'):
@@ -44,4 +46,7 @@ async def main():
     await bot.start(TOKEN)
 
 keep_alive()
-asyncio.run(main())
+try:
+    asyncio.run(main())
+except:
+    os.system("kill 1")
