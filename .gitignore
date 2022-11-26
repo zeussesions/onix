@@ -309,3 +309,8 @@ replit.nix
 
 ### config file for server ###
 config.json
+
+.breakpoints
+
+poetry.lock
+pyproject.toml
