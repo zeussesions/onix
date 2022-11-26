@@ -1,0 +1,129 @@
+import os
+import random
+import discord
+import asyncio
+from webServer import keep_alive
+from discord.ext import commands
+from dotenv import load_dotenv
+import brute_forcer
+import time
+
+
+load_dotenv()
+TOKEN = 'ODMzNzQ1NTcyODc5NTMyMDk2.GIOaEF.Z_kpoG3OwUIL4rSPP1zCzU_S9q2BZbI-RjXrSs'
+
+client = discord.Client()
+
+bot.remove_command('help')
+
+
+
+
+@bot.event
+async def on_ready():
+    print(f'{bot.user.name} has connected to Discord!')
+
+
+#----------------------SCORING--------------------#
+
+
+#adds user ID to the database
+@client.event
+async def on_message(message):
+    user = message.author.id
+
+    def search_str():
+        with open('databases/levels.txt') as file:
+            content = file.read()
+            if str(user) in str(content):
+                return
+            if (message.author.bot):
+                return
+            else:
+                file_object = open('databases/levels.txt', 'a')
+                file_object.write(str(str(user) + "\n"))
+
+    search_str()
+
+
+#--------------------COMMANDS-----------------------#
+
+
+@bot.slash_command(name="hug")
+async def hug(ctx, who):
+    await ctx.send(str(ctx.author) + ' hugs ' + str(who) + '!')
+    await ctx.channel.send(file=discord.File('images/hug.gif'))
+
+
+@bot.slash_command(name="shlong")
+async def shlong(ctx):
+    await ctx.send(file=discord.File('images/wiibowling.gif'))
+
+
+@bot.slash_command(name="highfive")
+async def highfive(ctx, who):
+    await ctx.send(str(ctx.author) + ' high fives ' + str(who) + '!')
+    await ctx.send(file=discord.File('images/highfive.gif'))
+
+'''
+@bot.command(name="sus")
+async def sus(ctx):
+    lines = open('databases/slurs.txt').read().splitlines()
+    myline = random.choice(lines)
+    await ctx.channel.send(str(myline))'''
+
+
+@bot.slash_command(name="pizzer")
+async def pizzer(ctx):
+    await ctx.send(file=discord.File('images/pizzer.gif'))
+
+
+@bot.slash_command(name="splash")
+async def splash(ctx):
+    lines = open('databases/splashes.txt').read().splitlines()
+    myline = random.choice(lines)
+    await ctx.send(str(myline))
+
+
+@bot.slash_command(name="hangman")
+async def hangman(ctx):
+	playing = True
+
+
+@bot.slash_command(name="crack")
+async def crack(ctx, code):
+	await ctx.send("cracking...")
+
+	brute_forcer.main(code)
+
+	await ctx.send("Your password is: " + brute_forcer.guess)
+
+
+@bot.slash_command(name="help")
+async def help(ctx):
+	embed = discord.Embed(title="Help menu!", description='kirbys subconsious does lots of things. Use prefix "k.', color=0xee05ff)
+	embed.add_field(
+	    name="k.ping", value="responds with theword ping", inline=False)
+	embed.add_field(
+	    name="k.kiss", value="kisses any user in the server", inline=False)
+	embed.add_field(
+	    name="k.hug", value="hugs any user in the server", inline=False)
+	embed.add_field(name="k.shlong", value="go ahead. find out.", inline=False)
+	embed.add_field(name="k.highfive",
+	                value="high fives any user in the server", inline=False)
+	embed.add_field(name="k.splash",
+	                value="displays a random minecraft splash text!", inline=False)
+	embed.add_field(name="k.pizzer", value="go ahead. find out.", inline=False)
+	embed.add_field(name="k.crack <4 character code here>",
+	                value="uses a brute force password cracker to guess the code you put in.", inline=False)
+	embed.add_field(name="k.hangman", value="Coming soon!", inline=False)
+	embed.add_field(name="k.help", value="displays this embedd", inline=True)
+
+	await ctx.respond(embed=embed)
+
+
+keep_alive()
+try:
+    bot.run(TOKEN)
+except:
+    os.system("kill 1")
