@@ -8,9 +8,8 @@ class pokemon(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.hybrid_command(name='pokemon', with_app_command=True, description="Get a pokemon form the pokedex!")
-    @app_commands.guilds()
-    async def pokemon(self, ctx: commands.Context, id_or_name):
+    @commands.hybrid_command(name='pokemon', with_app_command=True)
+    async def pokemon(self, ctx: commands.Context, id_or_name: str):
         from urllib.request import Request, urlopen
         import json
         import matplotlib
