@@ -2,16 +2,28 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-
-
-class help(commands.Cog):
-    def __init__(self, bot):
+class Survey(commands.Cog):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
-        intents=discord.Intents.all()
-        intents.message_content = True
 
-    @commands.hybrid_command(name='help', with_app_command = True, description = "help")
-    @app_commands.guilds()
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print('Utility cog loaded, sync command online')
+
+    @commands.command()
+    @commands.guild_only()
+    async def sync(self, ctx) -> None:
+            synced = await ctx.bot.tree.sync()
+            await ctx.send(
+                f"Synced {len(synced)} commands to the current guild."
+            )
+            return
+
+    @commands.hybrid_command(name='ping', with_app_command=True)
+    async def ping(self, ctx: commands.Context):
+        await ctx.send("pong", ephemeral=True)
+    
+    @commands.hybrid_command(name='help', with_app_command=True)
     async def help(self, ctx: commands.Context):
         embed = discord.Embed(title="Help menu!", description='onix does lots of things. Use prefix "o.', color=000000)
         embed.add_field(name="o.test", value="responds with thew ord ping", inline=False)
@@ -25,8 +37,8 @@ class help(commands.Cog):
         embed.add_field(name="o.pokemon <pokemon name or number>", value="pokemon stats!!!", inline=False)
         embed.add_field(name="o.hangman", value="Coming soon!", inline=False)
         embed.add_field(name="o.help", value="displays this embed", inline=True)
-
         await ctx.send(embed=embed)
 
+
 async def setup(bot):
-    await bot.add_cog(help(bot))
+    await bot.add_cog(Survey(bot), guilds=[discord.Object(id=874842871801479208)])

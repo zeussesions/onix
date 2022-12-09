@@ -10,9 +10,8 @@ class rolladice(commands.Cog):
         intents=discord.Intents.all()
         intents.message_content = True
 
-    @commands.hybrid_command(name='rolladice', with_app_command = True, description = "dice roller, formatted in DND format")
-    @app_commands.guilds()
-    async def rolladice(self, ctx: commands.Context, dice):
+    @commands.hybrid_command(name='rolladice', with_app_command=True)
+    async def rolladice(self, ctx: commands.Context, dice: str):
         
         temp = re.findall(r'\d+', dice)
         res = list(map(int, temp))

@@ -7,9 +7,8 @@ class shlong(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.hybrid_command(name='shlong', with_app_command = True, description = "Go ahead. Try it.")
-    @app_commands.guilds()
-    async def shlong(self, ctx):
+    @commands.hybrid_command(name='shlong', with_app_command=True)
+    async def shlong(self, ctx: commands.Context):
         await ctx.send(file=discord.File('images/wiibowling.gif'))
 
 async def setup(bot):

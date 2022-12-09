@@ -9,8 +9,7 @@ class pizzer(commands.Cog):
         intents = discord.Intents.all()
         intents.message_content = True
 
-    @commands.hybrid_command(name='pizzer', with_app_command=True, description="eats pizzer")
-    @app_commands.guilds()
+    @commands.hybrid_command(name='pizzer', with_app_command=True)
     async def pizzer(self, ctx: commands.Context):
         await ctx.send(file=discord.File('images/pizzer.gif'))
 
