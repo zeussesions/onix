@@ -2,10 +2,10 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 from urllib.request import Request, urlopen
+import random
 import json
 import matplotlib
 import requests
-
 
 class pokemon(commands.Cog):
     def __init__(self, bot):
@@ -13,28 +13,7 @@ class pokemon(commands.Cog):
 
     @commands.hybrid_command(name='pokemon', with_app_command=True)
     async def pokemon(self, ctx: commands.Context, id_or_name: str):
-        from urllib.request import Request, urlopen
-        import json
-        import matplotlib
-
-        p = pokedex.Pokedex()
-
-        if type(id_or_name) == str:
-            poke = p.get_pokemon_by_name(id_or_name)
-        elif type(id_or_name) == int:
-            poke = p.get_pokemon_by_number(id_or_name)
-        elif type(id_or_name) == str and id_or_name == "random":
-            poke = p.get_pokemon_by_number(random.randint(1, 905))
-            id_or_name = random.randint(1, 905)
-            print(id_or_name)
-
-        def statsInfo(value):
-            url = f"https://pokeapi.co/api/v2/pokemon/{value}"
-            request_site = Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            webpage = urlopen(request_site).read()
-            data = json.loads(webpage)
-            return data
-
+        
         def colorhex(value):
             url = f"https://pokeapi.co/api/v2/pokemon-species/{value}/"
             request_site = Request(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -52,7 +31,7 @@ class pokemon(commands.Cog):
             data = json.loads(webpage)
             return data
 
-        url = "https://pokeapi.co/api/v2/pokemon/1/"
+        url = f"https://pokeapi.co/api/v2/pokemon/{id_or_name}/"
         request = requests.get(url)
         poke = request.json()
 
