@@ -13,11 +13,11 @@ class Survey(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def sync(self, ctx) -> None:
-            synced = await ctx.bot.tree.sync()
-            await ctx.send(
-                f"Synced {len(synced)} commands to the current guild."
-            )
-            return
+        synced = await ctx.bot.tree.sync()
+        await ctx.send(
+            f"Synced {len(synced)} commands to the current guild."
+        )
+        return
 
     @commands.hybrid_command(name='ping', with_app_command=True)
     async def ping(self, ctx: commands.Context):

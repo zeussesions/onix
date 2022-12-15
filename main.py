@@ -24,9 +24,13 @@ async def on_ready():
 
 
 async def load():
+    cogs_loaded = 0
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
             await bot.load_extension(f'cogs.{filename[:-3]}')
+            cogs_loaded += 1
+
+    print(str(cogs_loaded) + " cogs loaded")
 
 async def main():
     await load()
